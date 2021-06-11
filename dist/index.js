@@ -93,7 +93,9 @@ module.exports = async (context, { LokaliseApi, fs }) => {
 
 function checkRequiredTranslations(keys, requiredLangs) {
   return requiredLangs.split(',').every(lang => {
-    return (keys.translations.find(t => t.language_iso === lang) || {}).translation
+    return keys.every(key => {
+        return (key.translations.find(t => t.language_iso === lang) || {}).translation
+    })
   })
 }
 
