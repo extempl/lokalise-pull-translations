@@ -11,6 +11,7 @@ const requiredLangs = core.getInput('requiredLangs');
 const filename = core.getInput('filename');
 const directory = core.getInput('directory');
 const projectId = core.getInput('project-id');
+const format = core.getInput('format');
 
 main({
   apiKey,
@@ -18,7 +19,8 @@ main({
   requiredLangs,
   filename,
   directory,
-  projectId
+  projectId,
+  format
 }, {
   LokaliseApi, fs
 }).catch((error) => core.setFailed(error.message))
