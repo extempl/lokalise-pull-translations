@@ -1,8 +1,13 @@
 const path = require('path');
 const { updatePropertiesWithValues } = require("./properties-format-parser");
 const { updateJsonWithValues } = require("./json-format-parser");
+const jsonFormat = require('json-format');
 
 const LANG_ISO_PLACEHOLDER = '%LANG_ISO%';
+const jsonFormatConfig = {
+  type: 'space',
+  size: 2
+};
 
 let _context;
 let _lokalise;
@@ -85,10 +90,10 @@ async function getUpdatedKeys (localKeys, remoteKeys, languageCodes) {
   languageCodes.forEach((lang) => {
     switch (_context.format) {
       case 'json':
-        languageKeys[lang] = updateJsonWithValues(localKeys[lang], lang, remoteKeys, _context.platform);
+        languageKeys[lang] = jsonFormat(updateJsonWithValues(localKeys[lang], lang, remoteKeys, _context.platform), jsonFormatConfig) + '\n';
         break;
       case 'properties':
-        languageKeys[lang] = updatePropertiesWithValues(localKeys[lang], lang, remoteKeys, _context.platform);
+        languageKeys[lang] = updatePropertiesWithValues(localKeys[lang], lang, remoteKeys, _context.platform) + '\n';
         break;
       default:
         throw new Error('No parser found for format');
