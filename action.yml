@@ -1,13 +1,24 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: Lokalise Pull Translations
+description: 'Checks for translations by tag and pulls them into the PR'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  api-token:
+    description: API token
     required: true
-    default: '1000'
-outputs:
-  time: # output will be available to future steps
-    description: 'The message to output'
+  ref:
+    description: branch reference
+    required: true
+  requiredLangs:
+    description: List of required iso languages separated by comma
+    required: true
+  filename:
+    description: The Lokalise filename to use on new keys
+    required: true
+  directory:
+    description: The directory to find language files
+    required: true
+  format:
+    description: The file format to parse. (json, properties)
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'

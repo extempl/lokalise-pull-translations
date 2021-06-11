@@ -1,21 +1,24 @@
 const core = require('@actions/core');
-const wait = require('./wait');
-
+// const wait = require('./wait');
+const { LokaliseApi } = require('@lokalise/node-api');
+const fs = require('fs');
+const main = require('./main');
 
 // most @actions toolkit packages have async methods
-async function run() {
-  try {
-    const ms = core.getInput('milliseconds');
-    core.info(`Waiting ${ms} milliseconds ...`);
+const apiKey = core.getInput('api-token');
+const ref = core.getInput('ref');
+const requiredLangs = core.getInput('requiredLangs');
+const filename = core.getInput('filename');
+const directory = core.getInput('directory');
+const projectId = core.getInput('project-id');
 
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
-
-    core.setOutput('time', new Date().toTimeString());
-  } catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run();
+main({
+  apiKey,
+  ref,
+  requiredLangs,
+  filename,
+  directory,
+  projectId
+}, {
+  LokaliseApi, fs
+}).catch((error) => core.setFailed(error.message))
