@@ -13,16 +13,18 @@ module.exports = async (context, { LokaliseApi, fs }) => {
   _lokalise = new LokaliseApi({ apiKey: context.apiKey });
   _fs = fs;
 
+  const languageCodes = await getLanguageISOCodes();
+
   const remoteKeys = await getRemoteKeys({filter_tags: context.ref, include_translations: 1});
   const allRequiredI18nAreDone = checkRequiredTranslations(remoteKeys, context.requiredLangs);
 
   console.log(`${remoteKeys.length} remote keys.`);
 
-  const localKeys = await getLocalKeys();
+  const localKeys = await getLocalKeys(languageCodes);
 
-  const updatedKeys = getUpdatedKeys(localKeys, remoteKeys);
+  const updatedKeys = getUpdatedKeys(localKeys, remoteKeys, languageCodes);
 
-  await updateKeys(updatedKeys);
+  await updateKeys(updatedKeys, languageCodes);
 
   return {
     updatedKeys,
@@ -38,9 +40,7 @@ function checkRequiredTranslations(keys, requiredLangs) {
   })
 }
 
-async function getLocalKeys () {
-  const languageCodes = await getLanguageISOCodes();
-
+async function getLocalKeys (languageCodes) {
   const languageKeys = {};
   const readFilePromises = languageCodes.map(async (lang) => {
     try {
@@ -80,8 +80,7 @@ async function getRemoteKeys (config) {
   return keys;
 }
 
-async function getUpdatedKeys (localKeys, remoteKeys) {
-  const languageCodes = await getLanguageISOCodes();
+async function getUpdatedKeys (localKeys, remoteKeys, languageCodes) {
   const languageKeys = {};
   languageCodes.forEach((lang) => {
     switch (_context.format) {
@@ -99,8 +98,7 @@ async function getUpdatedKeys (localKeys, remoteKeys) {
   return languageKeys;
 }
 
-async function updateKeys(updatedKeys) {
-  const languageCodes = await getLanguageISOCodes();
+async function updateKeys(updatedKeys, languageCodes) {
   const writeFilePromises = languageCodes.map(async (lang) => {
     try {
       await writeLanguageFile(lang, updatedKeys[lang]);
