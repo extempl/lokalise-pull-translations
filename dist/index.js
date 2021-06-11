@@ -49,7 +49,7 @@ function updateJsonWithValues (jsonString, lang, keysToUpdate, platform) {
     traverse(json, keyName, translation);
   })
 
-  return JSON.stringify(json);
+  return json;
 }
 
 module.exports = {
