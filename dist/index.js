@@ -104,7 +104,6 @@ function checkRequiredTranslations(keys, requiredLangs) {
 
 async function getLocalKeys () {
   const languageCodes = await getLanguageISOCodes();
-  console.log('Project language codes', languageCodes);
 
   const languageKeys = {};
   const readFilePromises = languageCodes.map(async (lang) => {
@@ -185,7 +184,9 @@ async function getLanguageISOCodes () {
   const languages = await _lokalise.languages.list({
     project_id: _context.projectId
   });
-  return languages.items.map(x => x.lang_iso);
+  const languageCodes = languages.items.map(x => x.lang_iso);
+  console.log('Project language codes', languageCodes);
+  return languageCodes;
 }
 
 function readLanguageFile (lang) {
@@ -210,6 +211,7 @@ function writeLanguageFile (lang, content) {
         reject(err);
         return;
       }
+      console.log('Write language file ' + path)
       resolve();
     });
   })
