@@ -19,6 +19,9 @@ function updateJsonWithValues (jsonString, lang, keysToUpdate, platform) {
     const traverse = (jsonPart, keyName, translation) => {
       const topKeyPart = keyName.shift();
       if (keyName.length) {
+        if (!jsonPart[topKeyPart]) {
+          jsonPart[topKeyPart] = {}
+        }
         traverse(jsonPart[topKeyPart], keyName, translation);
       } else {
         jsonPart[topKeyPart] = translation;
