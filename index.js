@@ -25,4 +25,6 @@ main({
   platform
 }, {
   LokaliseApi, fs
-}).catch((error) => core.setFailed(error.message))
+})
+.then(data => Object.keys(data).forEach(k => core.setOutput(k, data[k])))
+.catch((error) => core.setFailed(error.message))
