@@ -27,7 +27,7 @@ module.exports = async (context, { LokaliseApi, fs }) => {
   await updateKeys(updatedKeys, languageCodes);
 
   return {
-    updatedKeys,
+    updatedKeys: JSON.stringify(updatedKeys),
     allRequiredI18nAreDone
   }
 }

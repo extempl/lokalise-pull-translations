@@ -44,6 +44,7 @@ function updateJsonWithValues (jsonString, lang, keysToUpdate, platform) {
 
     const keyName = key.key_name[platform].split(JSON_DELIMITER);
     const translation = key.translations.find(t => t.language_iso === lang).translation;
+    console.log('updating', key.key_name[platform], 'with', translation)
 
     traverse(json, keyName, translation);
   })
@@ -91,7 +92,7 @@ module.exports = async (context, { LokaliseApi, fs }) => {
   await updateKeys(updatedKeys, languageCodes);
 
   return {
-    updatedKeys,
+    updatedKeys: JSON.stringify(updatedKeys),
     allRequiredI18nAreDone
   }
 }
