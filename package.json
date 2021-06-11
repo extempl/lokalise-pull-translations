@@ -1,6 +1,6 @@
 {
   "name": "lokalise-pull-translations",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Lokalise Pull Translations",
   "main": "index.js",
   "scripts": {

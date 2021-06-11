@@ -87,12 +87,12 @@ module.exports = async (context, { LokaliseApi, fs }) => {
 
   const localKeys = await getLocalKeys(languageCodes);
 
-  const updatedKeys = getUpdatedKeys(localKeys, remoteKeys, languageCodes);
+  const updatedKeys = await getUpdatedKeys(localKeys, remoteKeys, languageCodes);
 
   await updateKeys(updatedKeys, languageCodes);
 
   return {
-    updatedKeys: JSON.stringify(updatedKeys),
+    updatedKeys: remoteKeys.length,
     allRequiredI18nAreDone
   }
 }
