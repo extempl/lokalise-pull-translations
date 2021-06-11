@@ -19,6 +19,12 @@ inputs:
   format:
     description: The file format to parse. (json, properties)
     required: true
+  platform:
+    description: The Lokalise platform to sync
+    required: true
+  project-id:
+    description: The project ID
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
