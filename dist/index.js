@@ -27,6 +27,12 @@ function objectToKeyValuePairs (o, prefix = '') {
   return names;
 }
 
+function sortObject (obj) {
+  const entries = Object.entries(obj);
+  const sortedEntries = entries.sort((a, b) => a[0].toLowerCase() < b[0].toLowerCase() ? -1 : 1);
+  return Object.fromEntries(sortedEntries);
+}
+
 function updateJsonWithValues (jsonString, lang, keysToUpdate, platform) {
   const json = JSON.parse(jsonString);
   keysToUpdate.forEach(key => {
@@ -37,6 +43,7 @@ function updateJsonWithValues (jsonString, lang, keysToUpdate, platform) {
           jsonPart[topKeyPart] = {}
         }
         traverse(jsonPart[topKeyPart], keyName, translation);
+        jsonPart[topKeyPart] = sortObject(jsonPart[topKeyPart]);
       } else {
         jsonPart[topKeyPart] = translation;
       }
