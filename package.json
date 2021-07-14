@@ -27,7 +27,7 @@
   "homepage": "https://github.com/extempl/lokalise-pull-translations#readme",
   "dependencies": {
     "@actions/core": "^1.4.0",
-    "@lokalise/node-api": "^6.2.1",
+    "@lokalise/node-api": "^6.2.2",
     "json-format": "^1.0.1",
     "properties-parser": "^0.3.1"
   },
