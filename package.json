@@ -32,7 +32,7 @@
     "properties-parser": "^0.3.1"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.28.6",
+    "@vercel/ncc": "^0.29.1",
     "eslint": "^7.29.0"
   }
 }
