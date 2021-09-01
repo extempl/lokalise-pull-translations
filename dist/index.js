@@ -141,6 +141,9 @@ async function getRemoteKeys (config) {
     ...config,
     project_id: projectId,
     filter_platforms: platform,
+    filter_filenames: _context.useFilepath === 'true' ?
+        path.join(_context.directory, _context.filename) :
+        _context.filename,
     page,
     limit: 5000
   });
@@ -10470,12 +10473,14 @@ const directory = core.getInput('directory');
 const projectId = core.getInput('project-id');
 const format = core.getInput('format');
 const platform = core.getInput('platform');
+const useFilepath = core.getInput('use-filepath');
 
 main({
   apiKey,
   ref,
   requiredLangs,
   filename,
+  useFilepath,
   directory,
   projectId,
   format,
