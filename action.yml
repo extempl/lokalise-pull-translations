@@ -13,6 +13,9 @@ inputs:
   filename:
     description: The Lokalise filename to use on new keys
     required: true
+  use-filepath:
+    description: Use full filepath as a filename
+    required: false
   directory:
     description: The directory to find language files
     required: true

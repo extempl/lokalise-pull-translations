@@ -69,6 +69,9 @@ async function getRemoteKeys (config) {
     ...config,
     project_id: projectId,
     filter_platforms: platform,
+    filter_filenames: _context.useFilepath === 'true' ?
+        path.join(_context.directory, _context.filename) :
+        _context.filename,
     page,
     limit: 5000
   });

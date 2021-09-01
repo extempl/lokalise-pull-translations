@@ -13,12 +13,14 @@ const directory = core.getInput('directory');
 const projectId = core.getInput('project-id');
 const format = core.getInput('format');
 const platform = core.getInput('platform');
+const useFilepath = core.getInput('use-filepath');
 
 main({
   apiKey,
   ref,
   requiredLangs,
   filename,
+  useFilepath,
   directory,
   projectId,
   format,
