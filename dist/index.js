@@ -206,7 +206,7 @@ async function getLanguageISOCodes () {
 function readLanguageFile (lang) {
   const path = buildLanguageFilePath(lang);
   return new Promise((resolve, reject) => {
-    _fs.readFile(path, 'utf8', (err, data) => {
+    _fs.readFile(path, _context.format === 'properties' ? 'latin1' : 'utf8', (err, data) => {
       if (err) {
         reject(err);
         return;
@@ -220,7 +220,7 @@ function readLanguageFile (lang) {
 function writeLanguageFile (lang, content) {
   const path = buildLanguageFilePath(lang);
   return new Promise((resolve, reject) => {
-    _fs.writeFile(path, content, 'utf8', (err) => {
+    _fs.writeFile(path, content, _context.format === 'properties' ? 'latin1' : 'utf8', (err) => {
       if (err) {
         reject(err);
         return;
@@ -10287,7 +10287,7 @@ const updatePropertiesWithValues = (data, lang, keysToUpdate, platform) => {
   })
   return Object.keys(dataMap)
   .sort()
-  .map(key => `${key} = ${dataMap[key]}`)
+  .map(key => `${key} = ${dataMap[key].replaceAll('\n', '\\n').replaceAll('\r', '\\r')}`)
   .join('\n') + '\n';
 };
 
