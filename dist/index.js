@@ -191,7 +191,7 @@ async function updateKeys(updatedKeys, languageCodes) {
 }
 
 function buildLanguageFilePath (languageCode) {
-  return path.join(_context.directory, _context.filename.replace(LANG_ISO_PLACEHOLDER, languageCode))
+  return path.join('../tibet/', _context.directory, _context.filename.replace(LANG_ISO_PLACEHOLDER, languageCode))
 }
 
 async function getLanguageISOCodes () {
@@ -205,13 +205,14 @@ async function getLanguageISOCodes () {
 
 function readLanguageFile (lang) {
   const path = buildLanguageFilePath(lang);
+  const format = _context.format === 'properties' ? 'latin1' : 'utf8';
   return new Promise((resolve, reject) => {
-    _fs.readFile(path, _context.format === 'properties' ? 'latin1' : 'utf8', (err, data) => {
+    _fs.readFile(path, format, (err, data) => {
       if (err) {
         reject(err);
         return;
       }
-      console.log('Read language file ' + path);
+      console.log('Read language file ' + path + ' in format ' + format);
       resolve(data);
     });
   })
@@ -219,13 +220,14 @@ function readLanguageFile (lang) {
 
 function writeLanguageFile (lang, content) {
   const path = buildLanguageFilePath(lang);
+  const format = _context.format === 'properties' ? 'latin1' : 'utf8';
   return new Promise((resolve, reject) => {
-    _fs.writeFile(path, content, _context.format === 'properties' ? 'latin1' : 'utf8', (err) => {
+    _fs.writeFile(path, content, format, (err) => {
       if (err) {
         reject(err);
         return;
       }
-      console.log('Write language file ' + path)
+      console.log('Write language file ' + path + ' in format ' + format);
       resolve();
     });
   })
