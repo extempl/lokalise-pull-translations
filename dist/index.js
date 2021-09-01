@@ -34,7 +34,7 @@ function sortObject (obj) {
 }
 
 function updateJsonWithValues (jsonString, lang, keysToUpdate, platform) {
-  const json = JSON.parse(jsonString);
+  const json = JSON.parse(jsonString || '{}');
   keysToUpdate.forEach(key => {
     const traverse = (jsonPart, keyName, translation) => {
       const topKeyPart = keyName.shift();
