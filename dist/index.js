@@ -9833,7 +9833,9 @@ function createEditor(/*path, options, callback*/) {
 
 	if(!path) { return new Editor(options); }
 
-	if(!callback) { return new Editor(fs.readFileSync(path).toString(), options); }
+	if(!callback) { 
+		return new Editor(fs.readFileSync(path).toString(), options); 
+	}
 
 	return fs.readFile(path, function(err, text) {
 		if(err) { return callback(err, null); }
@@ -10276,7 +10278,7 @@ const parser = __nccwpck_require__(4414);
 const parseProperties = (data) => parser.parse(data);
 
 const updatePropertiesWithValues = (data, lang, keysToUpdate, platform) => {
-  const dataMap = parseProperties(data);
+  const dataMap = parseProperties(data || '');
   keysToUpdate.forEach(key => {
     dataMap[key.key_name[platform]] = key.translations.find(t => t.language_iso === lang).translation;
   })
