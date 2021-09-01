@@ -9,7 +9,7 @@ const updatePropertiesWithValues = (data, lang, keysToUpdate, platform) => {
   })
   return Object.keys(dataMap)
   .sort()
-  .map(key => `${key} = ${dataMap[key]}`)
+  .map(key => `${key} = ${dataMap[key].replaceAll('\n', '\\n').replaceAll('\r', '\\r')}`)
   .join('\n') + '\n';
 };
 
