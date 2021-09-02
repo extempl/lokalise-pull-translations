@@ -206,8 +206,7 @@ async function getLanguageISOCodes () {
 function readLanguageFile (lang) {
   const path = buildLanguageFilePath(lang);
   return new Promise((resolve, reject) => {
-    const format = _context.format === 'properties' ? 'latin1' : 'utf8';
-    _fs.readFile(path, format, (err, data) => {
+    _fs.readFile(path, 'utf8', (err, data) => {
       if (err) {
         reject(err);
         return;
@@ -221,8 +220,7 @@ function readLanguageFile (lang) {
 function writeLanguageFile (lang, content) {
   const path = buildLanguageFilePath(lang);
   return new Promise((resolve, reject) => {
-    const format = _context.format === 'properties' ? 'latin1' : 'utf8';
-    _fs.writeFile(path, content, format, (err) => {
+    _fs.writeFile(path, content, 'utf8', (err) => {
       if (err) {
         reject(err);
         return;
@@ -10325,7 +10323,7 @@ const parser = __nccwpck_require__(4414);
 const parseProperties = (data) => parser.parse(data);
 
 const updatePropertiesWithValues = (data, lang, keysToUpdate, platform) => {
-  data = (data || '').replace(/(\\n|\\r|\\u|\\\u0020)/g, '\\$1')
+  data = (data || '').replace(/(\\n|\\r|\\\u0020)/g, '\\$1')
   const dataMap = parseProperties(data);
   keysToUpdate.forEach(key => {
     const translation = key.translations.find(t => t.language_iso === lang).translation;

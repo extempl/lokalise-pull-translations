@@ -3,7 +3,7 @@ const parser = require('properties-parser');
 const parseProperties = (data) => parser.parse(data);
 
 const updatePropertiesWithValues = (data, lang, keysToUpdate, platform) => {
-  data = (data || '').replace(/(\\n|\\r|\\u|\\\u0020)/g, '\\$1')
+  data = (data || '').replace(/(\\n|\\r|\\\u0020)/g, '\\$1')
   const dataMap = parseProperties(data);
   keysToUpdate.forEach(key => {
     const translation = key.translations.find(t => t.language_iso === lang).translation;

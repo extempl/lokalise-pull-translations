@@ -134,8 +134,7 @@ async function getLanguageISOCodes () {
 function readLanguageFile (lang) {
   const path = buildLanguageFilePath(lang);
   return new Promise((resolve, reject) => {
-    const format = _context.format === 'properties' ? 'latin1' : 'utf8';
-    _fs.readFile(path, format, (err, data) => {
+    _fs.readFile(path, 'utf8', (err, data) => {
       if (err) {
         reject(err);
         return;
@@ -149,8 +148,7 @@ function readLanguageFile (lang) {
 function writeLanguageFile (lang, content) {
   const path = buildLanguageFilePath(lang);
   return new Promise((resolve, reject) => {
-    const format = _context.format === 'properties' ? 'latin1' : 'utf8';
-    _fs.writeFile(path, content, format, (err) => {
+    _fs.writeFile(path, content, 'utf8', (err) => {
       if (err) {
         reject(err);
         return;
