@@ -211,7 +211,7 @@ function readLanguageFile (lang) {
         reject(err);
         return;
       }
-      console.log('Read language file ' + path + ' in format ' + format);
+      console.log('Read language file ' + path);
       resolve(data);
     });
   })
@@ -225,7 +225,7 @@ function writeLanguageFile (lang, content) {
         reject(err);
         return;
       }
-      console.log('Write language file ' + path + ' in format ' + format);
+      console.log('Write language file ' + path);
       resolve();
     });
   })
