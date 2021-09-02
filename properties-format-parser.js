@@ -11,7 +11,10 @@ const updatePropertiesWithValues = (data, lang, keysToUpdate, platform) => {
   })
   return Object.keys(dataMap)
   .sort()
-  .map(key => `${key} = ${dataMap[key]}`)
+  .map(key => {
+    const value = dataMap[key];
+    return `${key} = ${['\\', ''].includes(value) ? '\\\u0020' : value}`;
+  })
   .join('\n') + '\n';
 };
 

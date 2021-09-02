@@ -119,7 +119,7 @@ async function updateKeys(updatedKeys, languageCodes) {
 }
 
 function buildLanguageFilePath (languageCode) {
-  return path.join('../tibet', _context.directory, _context.filename.replace(LANG_ISO_PLACEHOLDER, languageCode))
+  return path.join(_context.directory, _context.filename.replace(LANG_ISO_PLACEHOLDER, languageCode))
 }
 
 async function getLanguageISOCodes () {
