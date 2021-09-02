@@ -191,7 +191,7 @@ async function updateKeys(updatedKeys, languageCodes) {
 }
 
 function buildLanguageFilePath (languageCode) {
-  return path.join(_context.directory, _context.filename.replace(LANG_ISO_PLACEHOLDER, languageCode))
+  return path.join('../tibet', _context.directory, _context.filename.replace(LANG_ISO_PLACEHOLDER, languageCode))
 }
 
 async function getLanguageISOCodes () {
@@ -206,7 +206,8 @@ async function getLanguageISOCodes () {
 function readLanguageFile (lang) {
   const path = buildLanguageFilePath(lang);
   return new Promise((resolve, reject) => {
-    _fs.readFile(path, 'utf8', (err, data) => {
+    const format = _context.format === 'properties' ? 'latin1' : 'utf8';
+    _fs.readFile(path, format, (err, data) => {
       if (err) {
         reject(err);
         return;
@@ -220,7 +221,8 @@ function readLanguageFile (lang) {
 function writeLanguageFile (lang, content) {
   const path = buildLanguageFilePath(lang);
   return new Promise((resolve, reject) => {
-    _fs.writeFile(path, content, 'utf8', (err) => {
+    const format = _context.format === 'properties' ? 'latin1' : 'utf8';
+    _fs.writeFile(path, content, format, (err) => {
       if (err) {
         reject(err);
         return;
@@ -10281,14 +10283,15 @@ const parser = __nccwpck_require__(4414);
 const parseProperties = (data) => parser.parse(data);
 
 const updatePropertiesWithValues = (data, lang, keysToUpdate, platform) => {
-  const dataMap = parseProperties(data || '');
+  data = (data || '').replace(/(\\n|\\r|\\u)/g, '\\$1')
+  const dataMap = parseProperties(data);
   keysToUpdate.forEach(key => {
     const translation = key.translations.find(t => t.language_iso === lang).translation;
     dataMap[key.key_name[platform]] = translation.replace("\n", '\n');
   })
   return Object.keys(dataMap)
   .sort()
-  .map(key => `${key} = ${dataMap[key].replace(/\n/g, '\\n').replace(/\r/g, '\\r')}`)
+  .map(key => `${key} = ${dataMap[key]}`)
   .join('\n') + '\n';
 };
 
