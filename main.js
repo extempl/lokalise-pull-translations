@@ -20,7 +20,7 @@ module.exports = async (context, { LokaliseApi, fs }) => {
 
   const languageCodes = await getLanguageISOCodes();
 
-  const remoteKeys = await getRemoteKeys({filter_tags: context.ref, include_translations: 1});
+  const remoteKeys = await getRemoteKeys({filter_tags: context.ref, include_translations: 1, filter_archived: 'exclude'});
   const allRequiredI18nAreDone = checkRequiredTranslations(remoteKeys, context.requiredLangs);
 
   console.log(`${remoteKeys.length} remote keys.`);
